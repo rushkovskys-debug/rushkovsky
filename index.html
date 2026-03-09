@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#9b59b6" />
+  <title>Рушковский Сергей</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    /* ── Переменные тем ─────────────────────────────── */
+    :root {
+      --bg:        #f3eefa;
+      --card:      #ffffff;
+      --text:      #1a0d2e;
+      --sub:       #6b5c80;
+      --btn:       #9b59b6;
+      --btn-h:     #8e44ad;
+      --btn-txt:   #ffffff;
+      --shadow:    rgba(155,89,182,.22);
+      --divider:   rgba(155,89,182,.35);
+      --radius:    14px;
+    }
+    [data-theme="dark"] {
+      --bg:        #17121f;
+      --card:      #241c30;
+      --text:      #f0e6ff;
+      --sub:       #b09dc8;
+      --btn:       #9b59b6;
+      --btn-h:     #a967c7;
+      --btn-txt:   #ffffff;
+      --shadow:    rgba(155,89,182,.35);
+      --divider:   rgba(155,89,182,.4);
+    }
+
+    /* ── Сброс ──────────────────────────────────────── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background .35s, color .35s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── Контейнер ──────────────────────────────────── */
+    .wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 36px 16px 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* ── Аватар ─────────────────────────────────────── */
+    .avatar-wrap {
+      position: relative;
+      width: 104px;
+      height: 104px;
+    }
+    .avatar, .avatar-ph {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      border: 3px solid var(--btn);
+      box-shadow: 0 6px 24px var(--shadow);
+    }
+    .avatar { object-fit: cover; display: block; }
+    .avatar-ph {
+      background: linear-gradient(135deg, #9b59b6 0%, #6c3483 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+
+    /* ── Имя и подзаголовок ─────────────────────────── */
+    .name {
+      font-size: 22px;
+      font-weight: 800;
+      text-align: center;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .role {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--btn);
+      text-align: center;
+      letter-spacing: .01em;
+    }
+
+    /* ── Разделитель ─────────────────────────────────── */
+    .line {
+      width: 48px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--divider);
+      margin: 2px 0;
+    }
+
+    /* ── Описание ────────────────────────────────────── */
+    .desc {
+      font-size: 13px;
+      color: var(--sub);
+      text-align: center;
+      line-height: 1.7;
+      max-width: 370px;
+    }
+    .desc strong { color: var(--text); font-weight: 600; }
+
+    /* ── Кнопки ──────────────────────────────────────── */
+    .btns {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: 6px;
+    }
+
+    /* Строка с двумя кнопками */
+    .row-2 {
+      display: flex;
+      gap: 9px;
+      width: 100%;
+    }
+    .row-2 .btn { flex: 1; }
+
+    /* Базовая кнопка */
+    .btn {
+      display: flex;
+      align-items: center;
+      padding: 13px 16px;
+      background: var(--btn);
+      color: var(--btn-txt);
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      gap: 10px;
+      box-shadow: 0 3px 12px var(--shadow);
+      transition: background .18s, transform .12s, box-shadow .18s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .btn:hover  { background: var(--btn-h); box-shadow: 0 5px 18px var(--shadow); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); box-shadow: 0 2px 8px var(--shadow); }
+
+    .btn-ico  { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .btn-ico svg { display: block; }
+    .btn-lbl  { flex: 1; line-height: 1.3; }
+    .btn-arr  { opacity: .6; flex-shrink: 0; display: flex; align-items: center; }
+
+    /* На очень маленьких экранах */
+    @media (max-width: 340px) {
+      .btn { font-size: 12px; padding: 11px 12px; }
+      .btn-ico { font-size: 16px; }
+      .name { font-size: 19px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Аватар -->
+  <div class="avatar-wrap">
+    <img class="avatar" src="photo.jpg" alt="Сергей Рушковский"
+         onerror="this.style.display='none';document.querySelector('.avatar-ph').style.display='flex';" />
+    <div class="avatar-ph" style="display:none;">СР</div>
+  </div>
+
+  <!-- Имя -->
+  <div class="name">Рушковский Сергей</div>
+  <div class="role">Интернет-маркетолог · Параспортсмен · Иркутск</div>
+
+  <div class="line"></div>
+
+  <!-- Описание -->
+  <div class="desc">
+    Продвигаю компании в России и за рубежом с помощью <strong>AI-технологий</strong>.<br/>
+    Восстанавливаюсь после перелома позвоночника и веду об этом блог.<br/>
+    Помогаю восстанавливать монастырь в Иркутске.<br/>
+    Изучаю классическую философию и занимаюсь параспортом.<br/>
+    Буду рад новым контактам! 👋
+  </div>
+
+  <!-- Кнопки -->
+  <div class="btns">
+
+    <!-- Строка 1: Telegram + Max -->
+    <div class="row-2">
+      <a class="btn" href="https://t.me/rushkovsky_s" target="_blank" rel="noopener">
+        <!-- Telegram logo -->
+        <span class="btn-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/></svg></span>
+        <span class="btn-lbl">Telegram</span>
+        <span class="btn-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </a>
+      <a class="btn" href="https://max.ru/u/f9LHodD0cOKw8jkVzesB_hLucMJnSA-SJBhcgDrkdZUIDnVWuGzlOyiqWKk" target="_blank" rel="noopener">
+        <!-- Max — speech bubble -->
+        <span class="btn-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01" stroke="white" stroke-width="2.5"/></svg></span>
+        <span class="btn-lbl">Max</span>
+        <span class="btn-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </a>
+    </div>
+
+    <!-- Строка 2: E-mail -->
+    <a class="btn" href="mailto:rushkovsky.s@ya.ru">
+      <!-- Envelope -->
+      <span class="btn-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+      <span class="btn-lbl">E-mail</span>
+      <span class="btn-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>
+
+    <!-- Строка 3 -->
+    <a class="btn" href="https://t.me/rush_marketing" target="_blank" rel="noopener">
+      <!-- Megaphone -->
+      <span class="btn-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span>
+      <span class="btn-lbl">Интернет-продвижение вашего бренда</span>
+      <span class="btn-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>
+
+    <!-- Строка 4 -->
+    <a class="btn" href="https://vh-irk.ru/vosstanovlenie-monastyrya" target="_blank" rel="noopener">
+      <!-- Church -->
+      <span class="btn-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="10" y1="4" x2="14" y2="4"/><path d="M5 22V10l7-5 7 5v12"/><path d="M10 22v-5h4v5"/></svg></span>
+      <span class="btn-lbl">Восстанавливаем монастырь в Иркутске</span>
+      <span class="btn-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>
+
+    <!-- Строка 5 -->
+    <a class="btn" href="https://rushkovsky.ru/ice-storm" target="_blank" rel="noopener">
+      <!-- Mountain -->
+      <span class="btn-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 20 12 4 21 20 3 20"/><polyline points="9.5 11 12 7 14.5 11"/></svg></span>
+      <span class="btn-lbl">О том, как я Байкал покорил</span>
+      <span class="btn-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>
+
+    <!-- Строка 6 -->
+    <a class="btn" href="https://t.me/spineadapt" target="_blank" rel="noopener">
+      <!-- Activity / pulse — rehabilitation -->
+      <span class="btn-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+      <span class="btn-lbl">Иркутский клуб спинальной реабилитации</span>
+      <span class="btn-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>
+
+    <!-- Строка 7 -->
+    <a class="btn" href="https://t.me/genealogist_rushkovsky" target="_blank" rel="noopener">
+      <!-- Open book -->
+      <span class="btn-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+      <span class="btn-lbl">История семьи Рушковских в Сибири</span>
+      <span class="btn-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var tg = window.Telegram && window.Telegram.WebApp;
+
+  function setTheme(dark) {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  }
+
+  if (tg) {
+    // Внутри Telegram — берём тему из приложения
+    tg.ready();
+    tg.expand();
+    setTheme(tg.colorScheme === 'dark');
+    tg.onEvent('themeChanged', function () {
+      setTheme(tg.colorScheme === 'dark');
+    });
+  } else {
+    // Вне Telegram — тёмная тема с 20:00 до 08:00
+    var h = new Date().getHours();
+    setTheme(h >= 20 || h < 8);
+  }
+})();
+</script>
+</body>
+</html>
